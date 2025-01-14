@@ -82,11 +82,11 @@ Directories
 
 - ReceiverBootloader:
 
-  -**src/**: The source code files for the Receiver Bootloader, handling interrupts and M mode operations.
+  - **src/**: The source code files for the Receiver Bootloader, handling interrupts and M mode operations.
 
 - Project Practical Files
 
-  -**FinalProjectOM.pdsprj**: Main project file for the STM32 development environment.
+  - **FinalProjectOM.pdsprj**: Main project file for the STM32 development environment.
 
 ## Authors
 
