@@ -2,6 +2,8 @@
 
 # Bootloader Data Transmission Project
 
+![My Project Image](./finalproject.png)
+
 ## Overview
 
 This project demonstrates a Bootloader system using UART communication between a Host microcontroller and a Receiver microcontroller. The system is designed to enter a waiting state for a few seconds, allowing the Receiver to check for an interrupt signal. If an interrupt is detected, the Receiver switches to **M mode**, where it can receive commands sent from the Transmitter. If no interrupt is received within the specified time, the Receiver sends an "x" and enters the **Core Application Mode**. Once in **M mode**, the Receiver can perform tasks like flashing firmware, erasing memory, verifying CRC, and more. The Receiver can exit **M mode** by pressing the "Finish" button (Pin 13C on the Transmitter).
