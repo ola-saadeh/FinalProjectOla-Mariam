@@ -88,7 +88,7 @@ Directories
 
 - Project Practical Files
 
-  - **FinalProjectOM.pdsprj**: Main project file for the STM32 development environment.
+  - **FinalProjectOM.pdsprj**: Main project file for the STM32 development environment Proteus v8.13.
 
 ## Authors
 
