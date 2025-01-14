@@ -76,11 +76,17 @@ In this mode, the Receiver can perform normal operations like blinking an LED on
 
 Directories
 
-- TransmitterHost: - **src/**: The source code files for the Host, responsible for UART communication and command transmission.
+- TransmitterHost:
 
-- ReceiverBootloader: -**src/**: The source code files for the Receiver Bootloader, handling interrupts and M mode operations.
+  - **src/**: The source code files for the Host, responsible for UART communication and command transmission.
 
-- Project Practical Files -**FinalProjectOM.pdsprj**: Main project file for the STM32 development environment.
+- ReceiverBootloader:
+
+  -**src/**: The source code files for the Receiver Bootloader, handling interrupts and M mode operations.
+
+- Project Practical Files
+
+  -**FinalProjectOM.pdsprj**: Main project file for the STM32 development environment.
 
 ## Authors
 
