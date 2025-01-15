@@ -164,12 +164,13 @@ void USART_ParseRecord(const char *Record)
 
         // Check for specific characters to perform actions based on any function flashed
         // If '.' is received, indicate "app1" by setting PIN0 high
-        if (MUART_u8_RecieveData() == '.')
+        u8 indicator=MUART_u8_RecieveData() ;
+        if (indicator == '.')
         {
             MGPIO_void_SetPinValue(PORTB, PIN0, High); // Set PIN0 high to indicate "app1" flashing in the receiver bootloader
         }
         // If ',' is received, indicate "app2" by setting PIN1 high
-        else if (MUART_u8_RecieveData() == ',')
+        else if (indicator == ',')
         {
             MGPIO_void_SetPinValue(PORTB, PIN1, High); // Set PIN1 high to indicate "app2" flashing in the receiver bootloader
         }
