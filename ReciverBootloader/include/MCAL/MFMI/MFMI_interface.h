@@ -10,6 +10,8 @@
 #define MFMI_INTERFACE_H_
 
 #define VTOR *((volatile u32*) (0xE000ED08))
+#define CPUID *((volatile u32*) (0xE000ED00)) 
+//The CPUID register contains the processor part number, version, and implementation information.
 typedef enum
 {
 	sector0=0,
