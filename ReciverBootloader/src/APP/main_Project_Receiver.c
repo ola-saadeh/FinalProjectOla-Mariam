@@ -327,7 +327,37 @@ int main(void)
             }
             else if (ctrlDataListen == 'v')
             { // Return device version
-                MUART_voidSendSrting((u8 *)"CORTEX M4 STM32F401CC ");
+                  u32 cpuid_value = *((volatile u32*)0xE000ED00); // same as u32 cpuid_value = CPUID;
+            	    cpuid_value = 0x410FC241;// THIS DATA from data sheet i added manually because proteus didn't read it correct! 
+            	    u32 implementer = (cpuid_value >> 24) & 0xFF;
+            	    u32 variant = (cpuid_value >> 20) & 0xF;
+            	    u32 part_no = (cpuid_value >> 4) & 0xFFF;
+            	    u32 revision = cpuid_value & 0xF;
+
+
+            	    if (implementer == 0x41) {
+            	        MUART_voidSendSrting((u8 *)"Implementer: ARM ");
+            	    } else {
+            	        MUART_voidSendSrting((u8 *)"Implementer: Unknown ");
+            	    }
+
+            	    if (variant == 0x0) {
+            	        MUART_voidSendSrting((u8 *)"Variant: Revision 0 ");
+            	    } else {
+            	        MUART_voidSendSrting((u8 *)"Variant: Unknown ");
+            	    }
+
+            	    if (part_no == 0xC24)
+            	    {
+            	        MUART_voidSendSrting((u8 *)"PartNo: Cortex-M4 ");
+            	    }
+
+            	    if (revision == 0x1) {
+            	        MUART_voidSendSrting((u8 *)"Revision: Patch 1 ");
+            	    } else {
+            	        MUART_voidSendSrting((u8 *)"Revision: Unknown ");
+            	    }
+
             }
             else
             { // Handle other cases, possibly invalid or unexpected data
