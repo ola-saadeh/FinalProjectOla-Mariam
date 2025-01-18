@@ -182,6 +182,7 @@ int main(void)
      * - In case of specific control signals ('e', 'z', 'v'), the receiver can erase sectors, display device information, or handle invalid commands.
      * - After completing the flashing process, the system performs a visual indication using GPIO pins to indicate success.
      */
+      MUART_voidSendSrting((u8 *)"System will wait for 8 seconds. If no interrupt is detected, it will transition to the core application...");
     u8 mode = MUART_u8_RecieveData();
     if (mode == 'm')
     {
@@ -216,7 +217,6 @@ int main(void)
                     if (ctrlDataRec == 'f') // End of file or transmission signal If 'f' is received, finish the flashing process
                     {
                         // Send an acknowledgment to end of flashing
-                        MUART_void_SendData(AppIndex == 0 ? '.' : ',');
                         MUART_voidSendSrting(
                             (u8 *)(AppIndex == 0 ? "Flashing Application 1" : "Flashing Application 2"));
                         break; // Exit the loop once 'f' is received
@@ -368,6 +368,7 @@ int main(void)
     // after finish m mode (connect mode with transmitter) enable interrupt on receiver
     MEXTI_void_EnableInterrupts();
     // after finish m mode go to core app mode its blinking pin13
+   MUART_voidSendSrting((u8 *)"Moved to the core application...");
     while (1)
     {
         MGPIO_void_SetPinValue(PORTA, PIN13, High);
