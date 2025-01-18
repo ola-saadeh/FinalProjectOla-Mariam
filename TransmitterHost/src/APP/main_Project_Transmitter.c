@@ -30,6 +30,10 @@
 #include "MCAL/MSTK/MSTK_interface.h"
 #include "MCAL/MUART/MUART_interface.h"
 
+/*****************************< HAL ****************************/
+#include "HAL/H7SEG/H7SEG_interface.h"
+
+
 /*****************************< APP *****************************/
 #include "APP/AHexParser/AHexParser_interface.h"
 #include "APP/AHexParser/OUT.h"
@@ -162,18 +166,21 @@ void USART_ParseRecord(const char *Record)
         // Case 1: End of file - send 'f'
         MUART_void_SendData('f');
 
-        // Check for specific characters to perform actions based on any function flashed
-        // If '.' is received, indicate "app1" by setting PIN0 high
-        u8 indicator=MUART_u8_RecieveData() ;
-        if (indicator == '.')
-        {
-            MGPIO_void_SetPinValue(PORTB, PIN0, High); // Set PIN0 high to indicate "app1" flashing in the receiver bootloader
-        }
-        // If ',' is received, indicate "app2" by setting PIN1 high
-        else if (indicator == ',')
-        {
-            MGPIO_void_SetPinValue(PORTB, PIN1, High); // Set PIN1 high to indicate "app2" flashing in the receiver bootloader
-        }
+        	// Check for specific characters to perform actions based on any function flashed
+		// If '1' is received, indicate "app1" by setting PIN0 high
+		while(1){
+		    u8 indector =MUART_u8_RecieveData();
+
+		    if (indector == '1') {
+			    MGPIO_void_SetPinValue(PORTB, PIN0, High); // Set PIN0 high to indicate "app1" flashing in the receiver bootloader
+			    break;
+		    }
+		    // If '2' is received, indicate "app2" by setting PIN1 high
+		    else if (indector == '2') {
+			    MGPIO_void_SetPinValue(PORTB, PIN1, High); // Set PIN1 high to indicate "app2" flashing in the receiver bootloader
+			    break;
+		    }
+		}
         break;
     default:
         // Default case: send 'o' to indicate an unknown record type
@@ -512,6 +519,7 @@ int main(void)
     }
     MEXTI_void_Enable(EXTI_LineThirteen);
 
+    H7SEG_voidInit();
     // Re-enable interrupts after configuration
     __asm volatile("MSR PRIMASK, %0" ::"r"(0) : "memory");
 
@@ -521,10 +529,21 @@ int main(void)
      * If no interrupt occurs and the firstFlag remains 0, the system sends 'x' to go to the core application
      * and disables interrupts to end the connection. */
     u8 i = 0;
-    for (i = 0; i < 4; i++)
-    {
-        MSTK_voidDelayms(7000);
-    }
+  u8 Number = 1;
+	for (i = 0; i < 4; i++) {
+		if (firstFlag == 1) {
+			// H7SEG_voidClear();
+			 break;
+		}
+		H7SEG_voidSetNumber(Number);
+		H7SEG_voidDisplayAnyNumber();
+		Number++;
+		MSTK_voidDelayms(3500);
+		H7SEG_voidSetNumber(Number);
+		H7SEG_voidDisplayAnyNumber();
+		Number++;
+		MSTK_voidDelayms(3500);
+	}
 
     if (firstFlag == 0)
     {
