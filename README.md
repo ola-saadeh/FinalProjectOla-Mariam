@@ -2,7 +2,7 @@
 
 # Bootloader Data Transmission Project
 
-![My Project Image](./finalproject.png)
+![My Project Image](./finalproject1.png)
 
 ## 📚 Table of Contents
 
